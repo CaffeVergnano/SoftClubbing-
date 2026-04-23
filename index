@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coffee Personas Quiz</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f6efe9, #e7d6c8);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: #3b2417;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 820px;
+      background: #fffaf6;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 20px 50px rgba(59, 36, 23, 0.15);
+    }
+
+    .title {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6a4a3a;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .progress-wrap {
+      margin-bottom: 24px;
+    }
+
+    .progress-text {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      color: #6a4a3a;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: #ead9cc;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #6f4e37, #b57b55);
+      transition: width 0.3s ease;
+    }
+
+    .question-card {
+      animation: fadeIn 0.35s ease;
+    }
+
+    .question {
+      font-size: 1.4rem;
+      margin-bottom: 22px;
+      line-height: 1.4;
+    }
+
+    .answers {
+      display: grid;
+      gap: 14px;
+    }
+
+    .answer-btn,
+    .restart-btn {
+      border: none;
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .answer-btn {
+      background: #f3e6dc;
+      color: #3b2417;
+      text-align: left;
+    }
+
+    .answer-btn:hover {
+      background: #e8d2c1;
+      transform: translateY(-2px);
+    }
+
+    .result {
+      animation: fadeIn 0.4s ease;
+    }
+
+    .result-badge {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #f0dfd2;
+      color: #6f4e37;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .result-title {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .result-description {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #5c4033;
+      margin-bottom: 24px;
+      white-space: pre-line;
+      text-align: left;
+    }
+
+    .restart-btn {
+      background: #6f4e37;
+      color: white;
+      padding: 14px 26px;
+    }
+
+    .restart-btn:hover {
+      background: #5b3f2c;
+      transform: translateY(-2px);
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #7b6253;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app {
+        padding: 24px 18px;
+      }
+
+      .title {
+        font-size: 1.7rem;
+      }
+
+      .question {
+        font-size: 1.2rem;
+      }
+
+      .result-title {
+        font-size: 1.6rem;
+      }
+
+      .result-description {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1 class="title">Coffee Personas</h1>
+    <p class="subtitle">Rispondi alle 5 domande e scopri quale coffee persona sei.</p>
+    <div id="quiz-container"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Come inizi la tua giornata?",
+        answers: [
+          { text: "La sveglia suona e sono subito attivo, zero attese", type: "ER" },
+          { text: "Con calma, magari chiacchierando o aspettando la prossima sveglia da posticipare", type: "CS" },
+          { text: "Organizzo tutto, voglio performare al meglio", type: "MP" },
+          { text: "Lento e mindful, mi aspetta una bella colazione", type: "DZ" },
+          { text: "Non ho ancora smesso dalla sera prima", type: "EM" }
+        ]
+      },
+      {
+        question: "Scegli una vibe musicale",
+        answers: [
+          { text: "Rock", type: "ER" },
+          { text: "Reggaeton e Latin", type: "CS" },
+          { text: "Pop e Contemporanea", type: "MP" },
+          { text: "Indie", type: "DZ" },
+          { text: "Musica Elettronica", type: "EM" }
+        ]
+      },
+      {
+        question: "Cosa cerchi dal tuo caffè?",
+        answers: [
+          { text: "Energia immediata", type: "ER" },
+          { text: "Ritualità sociale", type: "CS" },
+          { text: "Gusto deciso e sapori forti", type: "MP" },
+          { text: "Un momento di relax", type: "DZ" },
+          { text: "Un twist che lo renda interessante", type: "EM" }
+        ]
+      },
+      {
+        question: "Il tuo ruolo in un morning club?",
+        answers: [
+          { text: "Sempre in pista, non mi fermo", type: "ER" },
+          { text: "Parlo con tutti, creo networking", type: "CS" },
+          { text: "Ho appuntamento con troppe persone", type: "MP" },
+          { text: "Mi rilasso, prevengo il burnout", type: "DZ" },
+          { text: "Arrivo tardi, ma mi faccio notare", type: "EM" }
+        ]
+      },
+      {
+        question: "Come descriveresti il tuo weekend ideale?",
+        answers: [
+          { text: "Viaggio last minute in una capitale Europea", type: "ER" },
+          { text: "Basta che ci sia almeno un aperitivo organizzato", type: "CS" },
+          { text: "Weekend pianificato tra eventi e orari", type: "MP" },
+          { text: "Relax e detox. Andiamo alle terme?", type: "DZ" },
+          { text: "Niente di organizzato, ci piacciono le serate alternative", type: "EM" }
+        ]
+      }
+    ];
+
+    const resultsMap = {
+      ER: {
+        title: "⚡ Espresso Raver",
+        description: `Il Mood: "Il risveglio è il mio mainstage".
+
+Descrizione: Trasformi le prime ore del giorno in un’esplosione di energia: il mondo si accende, la musica rimbomba nelle cuffie della tua playlist preferita e ogni passo ti carica. Non c’è tempo da perdere, solo ritmo da seguire. Con te non ci si annoia mai, ma meglio non parlarti prima del primo caffè.
+
+Energia: 100% pura & senza compromessi.
+
+Green Flags:
+- Sei l’amico che propone sempre qualcosa di nuovo da fare
+- Sempre dritto al punto senza giri di parole
+- Super produttivo
+
+Red Flags:
+- Impaziente cronico
+- Rispondi “Ok” quando sei arrabbiato
+- Giudichi chi dorme più di 7 ore
+
+La tua combo: Succo Ace & Cornetto vuoto & Espresso`
+      },
+      CS: {
+        title: "🫧 Cappuccino Socializer",
+        description: `Il Mood: "Il ritmo nasce dalla compagnia".
+
+Descrizione: La tua energia nasce dall’interazione con gli altri: conversazioni, condivisioni di esperienze o il semplice stare in gruppo ti carica. Ogni sorso di caffè è un’occasione per scambiare idee, per te non c’è modo migliore di iniziare una bella giornata con una colazione tra amici. Non hai fretta di tuffarti nel caos quotidiano, preferisci goderti la schiuma della conversazione mentre il beat della giornata sale lentamente.
+
+Energia: Parte al 30% per arrivare al 100% in serata.
+
+Green Flags:
+- Empatico e sensibile
+- Sempre aggiornato sui gossip
+- Senza di te le serate non sono abbastanza spicy da essere raccontate
+
+Red Flags:
+- Logorroico
+- Eterno indeciso
+- Influenzabile dai giudizi degli altri
+
+La tua combo: Succo Pesca & Cornetto crema & Cappuccino`
+      },
+      MP: {
+        title: "💃 Macchiato Performer",
+        description: `Il Mood: "Sempre il Numero 1".
+
+Descrizione: Ti piace dominare la scena, dirigere il ritmo e non lasciare nulla al caso. Non segui il flusso: lo detti. Quando entri in una stanza, si percepisce grazie alla tua leadership naturale. Sai essere dolce senza perdere la tua intensità, ma attenzione a pensare che siano tutti come te.
+
+Energia: 80%.
+
+Green Flags:
+- Equilibrato ma con carattere
+- Responsabile e autonomo
+- Feedback-friendly
+
+Red Flags:
+- Pretendi troppo
+- Permaloso
+- Tendi ad essere sempre al centro dell’attenzione
+
+La tua combo: Succo Albicocca & Cornetto Cioccolato & Caffè Macchiato`
+      },
+      DZ: {
+        title: "🧘 Deca Zen",
+        description: `Il Mood: "Equilibrio ad ogni sorso".
+
+Descrizione: Il mondo scorre intorno a lui, ma lui resta centrato. Il Deca Zen non rincorre la giornata, la accompagna. Il caffè è pure piacere, non una carica: equilibrio e armonia definiscono il suo ritmo. Non ci sono problemi che non puoi gestire o situazioni che non puoi controllare, tutto per te è semplice e inizia con un bel caffè Deca.
+
+Energia: 50%.
+
+Green Flags:
+- Non c’è nessuno meno stressato di te
+- Hai una soluzione ad ogni problema, anche perché per te non esistono veri problemi
+- Ottimista
+
+Red Flags:
+- Ritardatario cronico
+- Superficiale
+- Disorganizzato
+
+La tua combo: Succo Mirtillo & Cornetto Cioccolato & Caffè Deca`
+      },
+      EM: {
+        title: "🍸 Espresso Martini",
+        description: `Il Mood: "La notte non finisce, evolve."
+
+Descrizione: Per chi vive tra la notte e il mattino. L’Espresso Martini è il twist della giornata: non segue il flow, lo trasforma. Entri nel “Morning Club” con l’attitudine di chi ha già vissuto tutto — e ha ancora voglia di un ultimo giro. Niente può essere banale, ti piacciono le cose complesse e sfaccettate altrimenti per te non c’è sfida. Sei eclettico, ma spesso è difficile capirti.
+
+Energia: 70%.
+
+Green Flags:
+- Sognatore
+- Raffinato e sempre all’ultima moda
+- Originale
+
+Red Flags:
+- Ma quanto te la tiri
+- Più complicato di un cubo di Rubik
+- Misterioso fino alla fine
+
+La tua combo: Toast & Espresso Martini`
+      }
+    };
+
+    let currentQuestion = 0;
+    let scores = {
+      ER: 0,
+      CS: 0,
+      MP: 0,
+      DZ: 0,
+      EM: 0
+    };
+
+    const quizContainer = document.getElementById("quiz-container");
+
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      const progressPercent = (currentQuestion / questions.length) * 100;
+
+      quizContainer.innerHTML = `
+        <div class="progress-wrap">
+          <div class="progress-text">Domanda ${currentQuestion + 1} di ${questions.length}</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: ${progressPercent}%;"></div>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <h2 class="question">${q.question}</h2>
+          <div class="answers">
+            ${q.answers.map(answer => `
+              <button class="answer-btn" onclick="selectAnswer('${answer.type}')">
+                ${answer.text}
+              </button>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function selectAnswer(type) {
+      scores[type]++;
+      currentQuestion++;
+
+      if (currentQuestion < questions.length) {
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const finalType = Object.keys(scores).reduce((a, b) =>
+        scores[a] >= scores[b] ? a : b
+      );
+
+      const result = resultsMap[finalType];
+
+      quizContainer.innerHTML = `
+        <div class="progress-wrap">
+          <div class="progress-text">Quiz completato</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <div class="result">
+          <div class="result-badge">Risultato finale</div>
+          <h2 class="result-title">${result.title}</h2>
+          <p class="result-description">${result.description}</p>
+          <button class="restart-btn" onclick="restartQuiz()">Ricomincia il quiz</button>
+          <p class="footer-note">Coffee Personas Quiz</p>
+        </div>
+      `;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      scores = {
+        ER: 0,
+        CS: 0,
+        MP: 0,
+        DZ: 0,
+        EM: 0
+      };
+      renderQuestion();
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>
