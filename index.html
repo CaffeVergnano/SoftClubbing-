@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coffee Personas Quiz</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -44,6 +45,38 @@
       line-height: 1.5;
     }
 
+    .form-step {
+      display: grid;
+      gap: 14px;
+    }
+
+    .btn,
+    .answer-btn,
+    .restart-btn {
+      border: none;
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary,
+    .restart-btn {
+      background: #6f4e37;
+      color: white;
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
+
+    .btn-primary:hover,
+    .restart-btn:hover {
+      background: #5b3f2c;
+      transform: translateY(-2px);
+    }
+
     .progress-wrap {
       margin-bottom: 24px;
     }
@@ -64,13 +97,8 @@
 
     .progress {
       height: 100%;
-      width: 0%;
       background: linear-gradient(90deg, #6f4e37, #b57b55);
       transition: width 0.3s ease;
-    }
-
-    .question-card {
-      animation: fadeIn 0.35s ease;
     }
 
     .question {
@@ -84,16 +112,6 @@
       gap: 14px;
     }
 
-    .answer-btn,
-    .restart-btn {
-      border: none;
-      border-radius: 16px;
-      padding: 16px 18px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.25s ease;
-    }
-
     .answer-btn {
       background: #f3e6dc;
       color: #3b2417;
@@ -103,10 +121,6 @@
     .answer-btn:hover {
       background: #e8d2c1;
       transform: translateY(-2px);
-    }
-
-    .result {
-      animation: fadeIn 0.4s ease;
     }
 
     .result-badge {
@@ -134,33 +148,11 @@
       text-align: left;
     }
 
-    .restart-btn {
-      background: #6f4e37;
-      color: white;
-      padding: 14px 26px;
-    }
-
-    .restart-btn:hover {
-      background: #5b3f2c;
-      transform: translateY(-2px);
-    }
-
     .footer-note {
       margin-top: 20px;
       text-align: center;
       font-size: 0.9rem;
       color: #7b6253;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     @media (max-width: 640px) {
@@ -186,11 +178,23 @@
     }
   </style>
 </head>
+
 <body>
   <div class="app">
     <h1 class="title">Coffee Personas</h1>
-    <p class="subtitle">Rispondi alle 5 domande e scopri quale coffee persona sei.</p>
-    <div id="quiz-container"></div>
+    <p class="subtitle">Prima inserisci la tua email, poi rispondi alle 5 domande e scopri quale coffee persona sei.</p>
+
+    <div id="form-step" class="form-step">
+      <a 
+        href="https://forms.office.com/pages/responsepage.aspx?id=n7H-rBmyHECwlgbO1ANFRO1GBRp-uLdGr8FANQl7pO9URVIwNjNWUDI2WVBLSEhEVUVDNFFFVlpNSS4u&route=shorturl"
+        target="_blank"
+        class="btn btn-primary"
+      >
+        Inserisci la tua email
+      </a>
+    </div>
+
+    <div id="quiz-container" style="display: none;"></div>
   </div>
 
   <script>
@@ -263,11 +267,12 @@ Green Flags:
 
 Red Flags:
 - Impaziente cronico
-- Rispondi “Ok” quando sei arrabbiato
+- Rispondi "Ok" quando sei arrabbiato
 - Giudichi chi dorme più di 7 ore
 
 La tua combo: Succo Ace & Cornetto vuoto & Espresso`
       },
+
       CS: {
         title: "🫧 Cappuccino Socializer",
         description: `Il Mood: "Il ritmo nasce dalla compagnia".
@@ -288,6 +293,7 @@ Red Flags:
 
 La tua combo: Succo Pesca & Cornetto crema & Cappuccino`
       },
+
       MP: {
         title: "💃 Macchiato Performer",
         description: `Il Mood: "Sempre il Numero 1".
@@ -308,6 +314,7 @@ Red Flags:
 
 La tua combo: Succo Albicocca & Cornetto Cioccolato & Caffè Macchiato`
       },
+
       DZ: {
         title: "🧘 Deca Zen",
         description: `Il Mood: "Equilibrio ad ogni sorso".
@@ -328,6 +335,7 @@ Red Flags:
 
 La tua combo: Succo Mirtillo & Cornetto Cioccolato & Caffè Deca`
       },
+
       EM: {
         title: "🍸 Espresso Martini",
         description: `Il Mood: "La notte non finisce, evolve."
@@ -351,6 +359,7 @@ La tua combo: Toast & Espresso Martini`
     };
 
     let currentQuestion = 0;
+
     let scores = {
       ER: 0,
       CS: 0,
@@ -360,6 +369,12 @@ La tua combo: Toast & Espresso Martini`
     };
 
     const quizContainer = document.getElementById("quiz-container");
+
+    function startQuiz() {
+      document.getElementById("form-step").style.display = "none";
+      quizContainer.style.display = "block";
+      renderQuestion();
+    }
 
     function renderQuestion() {
       const q = questions[currentQuestion];
@@ -375,15 +390,19 @@ La tua combo: Toast & Espresso Martini`
 
         <div class="question-card">
           <h2 class="question">${q.question}</h2>
-          <div class="answers">
-            ${q.answers.map(answer => `
-              <button class="answer-btn" onclick="selectAnswer('${answer.type}')">
-                ${answer.text}
-              </button>
-            `).join("")}
-          </div>
+          <div class="answers" id="answers-container"></div>
         </div>
       `;
+
+      const answersContainer = document.getElementById("answers-container");
+
+      q.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.className = "answer-btn";
+        button.textContent = answer.text;
+        button.addEventListener("click", () => selectAnswer(answer.type));
+        answersContainer.appendChild(button);
+      });
     }
 
     function selectAnswer(type) {
@@ -424,6 +443,7 @@ La tua combo: Toast & Espresso Martini`
 
     function restartQuiz() {
       currentQuestion = 0;
+
       scores = {
         ER: 0,
         CS: 0,
@@ -431,10 +451,11 @@ La tua combo: Toast & Espresso Martini`
         DZ: 0,
         EM: 0
       };
-      renderQuestion();
-    }
 
-    renderQuestion();
+      document.getElementById("form-step").style.display = "grid";
+      quizContainer.style.display = "none";
+      quizContainer.innerHTML = "";
+    }
   </script>
 </body>
 </html>
