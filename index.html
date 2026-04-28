@@ -45,12 +45,31 @@
       line-height: 1.5;
     }
 
-    .form-step {
+    .email-box {
       display: grid;
       gap: 14px;
     }
 
-    .btn,
+    .email-input {
+      width: 100%;
+      border: 1px solid #e0cbbb;
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 1rem;
+      color: #3b2417;
+      background: #fff;
+    }
+
+    .privacy-label {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #6a4a3a;
+    }
+
+    .start-btn,
     .answer-btn,
     .restart-btn {
       border: none;
@@ -59,19 +78,16 @@
       font-size: 1rem;
       cursor: pointer;
       transition: 0.25s ease;
-      text-decoration: none;
     }
 
-    .btn-primary,
+    .start-btn,
     .restart-btn {
       background: #6f4e37;
       color: white;
-      text-align: center;
-      display: block;
       width: 100%;
     }
 
-    .btn-primary:hover,
+    .start-btn:hover,
     .restart-btn:hover {
       background: #5b3f2c;
       transform: translateY(-2px);
@@ -131,7 +147,6 @@
       background: #f0dfd2;
       color: #6f4e37;
       font-weight: bold;
-      font-size: 0.95rem;
     }
 
     .result-title {
@@ -146,6 +161,12 @@
       margin-bottom: 24px;
       white-space: pre-line;
       text-align: left;
+    }
+
+    .error-message {
+      color: #9b2c2c;
+      font-size: 0.9rem;
+      text-align: center;
     }
 
     .footer-note {
@@ -182,26 +203,37 @@
 <body>
   <div class="app">
     <h1 class="title">Coffee Personas</h1>
-    <p class="subtitle">Prima inserisci la tua email, poi rispondi alle 5 domande e scopri quale coffee persona sei.</p>
+    <p class="subtitle">
+      Inserisci la tua email, rispondi alle 5 domande e scopri quale coffee persona sei.
+    </p>
 
-    <div id="form-step" class="form-step">
-      <a 
-        href="https://forms.office.com/pages/responsepage.aspx?id=n7H-rBmyHECwlgbO1ANFRO1GBRp-uLdGr8FANQl7pO9URVIwNjNWUDI2WVBLSEhEVUVDNFFFVlpNSS4u&route=shorturl"
-        target="_blank"
-        class="btn btn-primary"
-      >
-        Inserisci la tua email
-      </a>
+    <div id="email-step">
+      <div class="email-box">
+        <input
+          type="email"
+          id="user-email"
+          class="email-input"
+          placeholder="Inserisci la tua email"
+        />
 
-      <button class="btn btn-primary" onclick="startQuiz()">
-        Ho compilato, inizia il quiz
-      </button>
+        <label class="privacy-label">
+          <input type="checkbox" id="privacy-check" />
+          <span>
+            Acconsento al trattamento della mia email per partecipare al quiz e ricevere comunicazioni legate all’iniziativa.
+          </span>
+        </label>
+
+        <button class="start-btn" onclick="startQuiz()">Inizia il quiz</button>
+        <p id="email-error" class="error-message"></p>
+      </div>
     </div>
 
     <div id="quiz-container" style="display: none;"></div>
   </div>
 
   <script>
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/maqagkon";
+
     const questions = [
       {
         question: "Come inizi la tua giornata?",
@@ -362,8 +394,9 @@ La tua combo: Toast & Espresso Martini`
       }
     };
 
+    let userEmail = "";
     let currentQuestion = 0;
-
+    let userAnswers = [];
     let scores = {
       ER: 0,
       CS: 0,
@@ -374,9 +407,31 @@ La tua combo: Toast & Espresso Martini`
 
     const quizContainer = document.getElementById("quiz-container");
 
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
     function startQuiz() {
-      document.getElementById("form-step").style.display = "none";
+      const email = document.getElementById("user-email").value.trim();
+      const privacyChecked = document.getElementById("privacy-check").checked;
+      const error = document.getElementById("email-error");
+
+      if (!isValidEmail(email)) {
+        error.textContent = "Inserisci una email valida.";
+        return;
+      }
+
+      if (!privacyChecked) {
+        error.textContent = "Devi accettare il trattamento dati per continuare.";
+        return;
+      }
+
+      userEmail = email;
+      error.textContent = "";
+
+      document.getElementById("email-step").style.display = "none";
       quizContainer.style.display = "block";
+
       renderQuestion();
     }
 
@@ -392,10 +447,8 @@ La tua combo: Toast & Espresso Martini`
           </div>
         </div>
 
-        <div class="question-card">
-          <h2 class="question">${q.question}</h2>
-          <div class="answers" id="answers-container"></div>
-        </div>
+        <h2 class="question">${q.question}</h2>
+        <div class="answers" id="answers-container"></div>
       `;
 
       const answersContainer = document.getElementById("answers-container");
@@ -404,13 +457,20 @@ La tua combo: Toast & Espresso Martini`
         const button = document.createElement("button");
         button.className = "answer-btn";
         button.textContent = answer.text;
-        button.addEventListener("click", () => selectAnswer(answer.type));
+        button.addEventListener("click", () => selectAnswer(answer));
         answersContainer.appendChild(button);
       });
     }
 
-    function selectAnswer(type) {
-      scores[type]++;
+    function selectAnswer(answer) {
+      scores[answer.type]++;
+
+      userAnswers.push({
+        question: questions[currentQuestion].question,
+        answer: answer.text,
+        personaCode: answer.type
+      });
+
       currentQuestion++;
 
       if (currentQuestion < questions.length) {
@@ -420,12 +480,35 @@ La tua combo: Toast & Espresso Martini`
       }
     }
 
+    async function saveLead(finalType, resultTitle) {
+      try {
+        await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            email: userEmail,
+            risultato: resultTitle,
+            codice_persona: finalType,
+            risposte: userAnswers,
+            data: new Date().toISOString()
+          })
+        });
+      } catch (error) {
+        console.error("Errore invio dati:", error);
+      }
+    }
+
     function showResult() {
       const finalType = Object.keys(scores).reduce((a, b) =>
         scores[a] >= scores[b] ? a : b
       );
 
       const result = resultsMap[finalType];
+
+      saveLead(finalType, result.title);
 
       quizContainer.innerHTML = `
         <div class="progress-wrap">
@@ -447,7 +530,7 @@ La tua combo: Toast & Espresso Martini`
 
     function restartQuiz() {
       currentQuestion = 0;
-
+      userAnswers = [];
       scores = {
         ER: 0,
         CS: 0,
@@ -456,7 +539,7 @@ La tua combo: Toast & Espresso Martini`
         EM: 0
       };
 
-      document.getElementById("form-step").style.display = "grid";
+      document.getElementById("email-step").style.display = "block";
       quizContainer.style.display = "none";
       quizContainer.innerHTML = "";
     }
