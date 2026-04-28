@@ -232,7 +232,7 @@
   </div>
 
   <script>
-    const FORMSPREE_ENDPOINT = "https://formspree.io/f/maqagkon";
+    const GOOGLE_ENDPOINT = "https://script.google.com/macros/s/AKfycbz593S16u5dnmg-LD37KmelT_MKuXzhq8tmkAOXKRJH_GjuSBrXgQ3Uwv7hLle5ERqT/exec";
 
     const questions = [
       {
@@ -480,25 +480,20 @@ La tua combo: Toast & Espresso Martini`
       }
     }
 
-    async function saveLead(finalType, resultTitle) {
-      try {
-        await fetch(FORMSPREE_ENDPOINT, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify({
-            email: userEmail,
-            risultato: resultTitle,
-            codice_persona: finalType,
-            risposte: userAnswers,
-            data: new Date().toISOString()
-          })
-        });
-      } catch (error) {
-        console.error("Errore invio dati:", error);
-      }
+    function saveLead(finalType, resultTitle) {
+      fetch(GOOGLE_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          result: resultTitle,
+          resultCode: finalType,
+          answers: userAnswers
+        })
+      });
     }
 
     function showResult() {
