@@ -176,6 +176,16 @@
       color: #7b6253;
     }
 
+    .result-image {
+      width: 120px; /* Puoi cambiare la dimensione */
+      height: auto;
+      border-radius: 50%;
+      margin-bottom: 16px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     @media (max-width: 640px) {
       .app {
         padding: 24px 18px;
@@ -292,105 +302,28 @@
         title: "⚡ Espresso Raver",
         description: `Il Mood: "Il risveglio è il mio mainstage".
 
-Descrizione: Trasformi le prime ore del giorno in un’esplosione di energia: il mondo si accende, la musica rimbomba nelle cuffie della tua playlist preferita e ogni passo ti carica. Non c’è tempo da perdere, solo ritmo da seguire. Con te non ci si annoia mai, ma meglio non parlarti prima del primo caffè.
-
-Energia: 100% pura & senza compromessi.
-
-Green Flags:
-- Sei l’amico che propone sempre qualcosa di nuovo da fare
-- Sempre dritto al punto senza giri di parole
-- Super produttivo
-
-Red Flags:
-- Impaziente cronico
-- Rispondi "Ok" quando sei arrabbiato
-- Giudichi chi dorme più di 7 ore
-
-La tua combo: Succo Ace & Cornetto vuoto & Espresso`
+Descrizione: Trasformi le prime ore del giorno in un’esplosione di energia...`,
+        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Espresso%20Raver.png"
       },
-
       CS: {
         title: "🫧 Cappuccino Socializer",
-        description: `Il Mood: "Il ritmo nasce dalla compagnia".
-
-Descrizione: La tua energia nasce dall’interazione con gli altri: conversazioni, condivisioni di esperienze o il semplice stare in gruppo ti carica. Ogni sorso di caffè è un’occasione per scambiare idee, per te non c’è modo migliore di iniziare una bella giornata con una colazione tra amici. Non hai fretta di tuffarti nel caos quotidiano, preferisci goderti la schiuma della conversazione mentre il beat della giornata sale lentamente.
-
-Energia: Parte al 30% per arrivare al 100% in serata.
-
-Green Flags:
-- Empatico e sensibile
-- Sempre aggiornato sui gossip
-- Senza di te le serate non sono abbastanza spicy da essere raccontate
-
-Red Flags:
-- Logorroico
-- Eterno indeciso
-- Influenzabile dai giudizi degli altri
-
-La tua combo: Succo Pesca & Cornetto crema & Cappuccino`
+        description: `Il Mood: "Il ritmo nasce dalla compagnia".`,
+        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Cappuccino%20Socializer.png"
       },
-
       MP: {
         title: "💃 Macchiato Performer",
-        description: `Il Mood: "Sempre il Numero 1".
-
-Descrizione: Ti piace dominare la scena, dirigere il ritmo e non lasciare nulla al caso. Non segui il flusso: lo detti. Quando entri in una stanza, si percepisce grazie alla tua leadership naturale. Sai essere dolce senza perdere la tua intensità, ma attenzione a pensare che siano tutti come te.
-
-Energia: 80%.
-
-Green Flags:
-- Equilibrato ma con carattere
-- Responsabile e autonomo
-- Feedback-friendly
-
-Red Flags:
-- Pretendi troppo
-- Permaloso
-- Tendi ad essere sempre al centro dell’attenzione
-
-La tua combo: Succo Albicocca & Cornetto Cioccolato & Caffè Macchiato`
+        description: `Il Mood: "Sempre il Numero 1".`,
+        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Macchiato%20Performer.png"
       },
-
       DZ: {
         title: "🧘 Deca Zen",
-        description: `Il Mood: "Equilibrio ad ogni sorso".
-
-Descrizione: Il mondo scorre intorno a lui, ma lui resta centrato. Il Deca Zen non rincorre la giornata, la accompagna. Il caffè è pure piacere, non una carica: equilibrio e armonia definiscono il suo ritmo. Non ci sono problemi che non puoi gestire o situazioni che non puoi controllare, tutto per te è semplice e inizia con un bel caffè Deca.
-
-Energia: 50%.
-
-Green Flags:
-- Non c’è nessuno meno stressato di te
-- Hai una soluzione ad ogni problema, anche perché per te non esistono veri problemi
-- Ottimista
-
-Red Flags:
-- Ritardatario cronico
-- Superficiale
-- Disorganizzato
-
-La tua combo: Succo Mirtillo & Cornetto Cioccolato & Caffè Deca`
+        description: `Il Mood: "Equilibrio ad ogni sorso".`,
+        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Deca%20Zen.png"
       },
-
       EM: {
         title: "🍸 Espresso Martini",
-        description: `Il Mood: "La notte non finisce, evolve."
-
-Descrizione: Per chi vive tra la notte e il mattino. L’Espresso Martini è il twist della giornata: non segue il flow, lo trasforma. Entri nel “Morning Club” con l’attitudine di chi ha già vissuto tutto — e ha ancora voglia di un ultimo giro. Niente può essere banale, ti piacciono le cose complesse e sfaccettate altrimenti per te non c’è sfida. Sei eclettico, ma spesso è difficile capirti.
-
-Energia: 70%.
-
-Green Flags:
-- Sognatore
-- Raffinato e sempre all’ultima moda
-- Originale
-
-Red Flags:
-- Ma quanto te la tiri
-- Più complicato di un cubo di Rubik
-- Misterioso fino alla fine
-
-La tua combo: Toast & Espresso Martini`
+        description: `Il Mood: "La notte non finisce, evolve".`,
+        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Espresso%20Martini%20Nightrunner.png"
       }
     };
 
@@ -516,6 +449,7 @@ La tua combo: Toast & Espresso Martini`
         <div class="result">
           <div class="result-badge">Risultato finale</div>
           <h2 class="result-title">${result.title}</h2>
+          <img src="${result.image}" alt="${result.title}" class="result-image" />
           <p class="result-description">${result.description}</p>
           <button class="restart-btn" onclick="restartQuiz()">Ricomincia il quiz</button>
           <p class="footer-note">Coffee Personas Quiz</p>
