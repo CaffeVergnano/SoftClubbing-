@@ -15,17 +15,17 @@
 
     body {
       background-image: url("https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/refs/heads/main/sfondo.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  color: #3b2417;
-}
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: #3b2417;
+    }
 
     .app {
       width: 100%;
@@ -299,8 +299,10 @@
 
     const resultsMap = {
       ER: {
-        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/refs/heads/main/espresso.png",
-        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Espresso%20Raver.png",
+        image: [
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/espresso.png", 
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Espresso%20Raver.png"
+        ],
         description: `Il Mood: "Il risveglio è il mio mainstage".
 
 Descrizione: Trasformi le prime ore del giorno in un’esplosione di energia: il mondo si accende, la musica rimbomba nelle cuffie della tua playlist preferita e ogni passo ti carica. Non c’è tempo da perdere, solo ritmo da seguire. Con te non ci si annoia mai, ma meglio non parlarti prima del primo caffè.
@@ -317,10 +319,11 @@ Red Flags:
 La tua combo: Espresso, Succo Ace & Cornetto vuoto
 `
       },
-
       CS: {
-        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/refs/heads/main/cappuccino.png",
-        image:  "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Cappuccino%20Socializer.png",
+        image: [
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/cappuccino.png", 
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Cappuccino%20Socializer.png"
+        ],
         description: `Il Mood: "Il ritmo nasce dalla compagnia".
 
 Descrizione: La tua energia nasce dall’interazione con gli altri: conversazioni, condivisioni di esperienze o il semplice stare in gruppo ti carica. Ogni sorso di caffè è un’occasione per scambiare idee, per te non c’è modo migliore di iniziare una bella giornata con una colazione tra amici. Non hai fretta di tuffarti nel caos quotidiano, preferisci goderti la schiuma della conversazione mentre il beat della giornata sale lentamente.
@@ -335,10 +338,11 @@ Red Flags:
 -Influenzabile dai giudizi degli altri
 La tua combo: Cappuccino, Succo Pesca & Cornetto alla crema`
       },
-
       MP: {
-        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/refs/heads/main/macchiato.png",
-        image:  "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Macchiato%20Performer.png",
+        image: [
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/macchiato.png", 
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Macchiato%20Performer.png"
+        ],
         description: `Il Mood: "Sempre il Numero 1".
 
 Descrizione: Ti piace dominare la scena, dirigere il ritmo e non lasciare nulla al caso. Non segui il flusso: lo detti. Quando entri in una stanza, si percepisce grazie alla tua leadership naturale. Sai essere dolce senza perdere la tua intensità, ma attenzione a pensare che siano tutti come te. Energia: 80%
@@ -351,13 +355,13 @@ Red Flags:
 -Permaloso
 -Tendi ad essere sempre al centro dell’attenzione
 
-La tua combo: Caffè Macchiato, Succo Albicocca  & Cornetto al Cioccolato  
-`
+La tua combo: Caffè Macchiato, Succo Albicocca  & Cornetto al Cioccolato `
       },
-
       DZ: {
-        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/refs/heads/main/deca.png",
-        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Deca%20Zen.png",
+        image: [
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/deca.png", 
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Deca%20Zen.png"
+        ],
         description: `Il Mood: "Equilibrio ad ogni sorso".
 
 Descrizione: Il mondo scorre intorno a lui, ma lui resta centrato. Il Deca Zen non rincorre la giornata, la accompagna. Il caffè è pure piacere, non una carica: equilibrio e armonia definiscono il suo ritmo. Non ci sono problemi che non puoi gestire o situazioni che non puoi controllare, tutto per te è semplice e inizia con un bel caffè Deca.Energia: 50%
@@ -370,16 +374,15 @@ Red Flags:
 -Superficiale
 -Disorganizzato
  
- La tua combo: Caffè Decaffeinato, Succo Mirtillo & Cornetto Cioccolato 
-`
+ La tua combo: Caffè Decaffeinato, Succo Mirtillo & Cornetto Cioccolato `
       },
-
       EM: {
-        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/refs/heads/main/martini.png",
-        image: "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Espresso%20Martini%20Nightrunner.png",
+        image: [
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/martini.png", 
+          "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Espresso%20Martini%20Nightrunner.png"
+        ],
         description: `Il Mood: "La notte non finisce, evolve".
-
-Descrizione: Per chi vive tra la notte e il mattino. L’Espresso Martini è il twist della giornata: non segue il flow, lo trasforma. Entri nel “Morning Club” con l’attitudine di chi ha già vissuto tutto — e ha ancora voglia di un ultimo giro. Niente può essere banale, ti piacciono le cose complesse e sfaccettate altrimenti per te non c’è sfida. Sei eclettico, ma spesso è difficile capirti.
+        Descrizione: Per chi vive tra la notte e il mattino. L’Espresso Martini è il twist della giornata: non segue il flow, lo trasforma. Entri nel “Morning Club” con l’attitudine di chi ha già vissuto tutto — e ha ancora voglia di un ultimo giro. Niente può essere banale, ti piacciono le cose complesse e sfaccettate altrimenti per te non c’è sfida. Sei eclettico, ma spesso è difficile capirti.
 Energia:  70%
 Green Flags:
 -Sognatore
@@ -391,21 +394,14 @@ Red Flags:
 -Più complicato di un cubo di Rubik
 -Misterioso fino alla fine
  
-La tua combo: Espresso Martini & Toast
-`
+La tua combo: Espresso Martini & Toast`
       }
     };
 
     let userEmail = "";
     let currentQuestion = 0;
     let userAnswers = [];
-    let scores = {
-      ER: 0,
-      CS: 0,
-      MP: 0,
-      DZ: 0,
-      EM: 0
-    };
+    let scores = { ER: 0, CS: 0, MP: 0, DZ: 0, EM: 0 };
 
     const quizContainer = document.getElementById("quiz-container");
 
@@ -518,7 +514,11 @@ La tua combo: Espresso Martini & Toast
         <div class="result">
           <div class="result-badge">Risultato finale</div>
           <h2 class="result-title">${result.title}</h2>
-          <img src="${result.image}" alt="${result.title}" class="result-image" />
+
+          <!-- Mostra entrambe le immagini -->
+          <img src="${result.image[0]}" alt="Immagine 1" class="result-image" />
+          <img src="${result.image[1]}" alt="Immagine 2" class="result-image" />
+
           <p class="result-description">${result.description}</p>
           <button class="restart-btn" onclick="restartQuiz()">Ricomincia il quiz</button>
           <p class="footer-note">Coffee Personas Quiz</p>
@@ -529,13 +529,7 @@ La tua combo: Espresso Martini & Toast
     function restartQuiz() {
       currentQuestion = 0;
       userAnswers = [];
-      scores = {
-        ER: 0,
-        CS: 0,
-        MP: 0,
-        DZ: 0,
-        EM: 0
-      };
+      scores = { ER: 0, CS: 0, MP: 0, DZ: 0, EM: 0 };
 
       document.getElementById("email-step").style.display = "block";
       quizContainer.style.display = "none";
