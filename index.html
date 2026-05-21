@@ -405,6 +405,189 @@ La tua combo: Espresso Martini & Toast`
     }
   };
 
+ <script>
+  const GOOGLE_ENDPOINT = "https://script.google.com/macros/s/AKfycbz593S16u5dnmg-LD37KmelT_MKuXzhq8tmkAOXKRJH_GjuSBrXgQ3Uwv7hLle5ERqT/exec";
+
+  const questions = [
+    {
+      question: "Come inizi la tua giornata?",
+      answers: [
+        { text: "La sveglia suona e sono subito attivo, zero attese", type: "ER" },
+        { text: "Con calma, magari chiacchierando o aspettando la prossima sveglia da posticipare", type: "CS" },
+        { text: "Organizzo tutto, voglio performare al meglio", type: "MP" },
+        { text: "Lento e mindful, mi aspetta una bella colazione", type: "DZ" },
+        { text: "Non ho ancora smesso dalla sera prima", type: "EM" }
+      ]
+    },
+    {
+      question: "Scegli una vibe musicale",
+      answers: [
+        { text: "Rock", type: "ER" },
+        { text: "Reggaeton e Latin", type: "CS" },
+        { text: "Pop e Contemporanea", type: "MP" },
+        { text: "Indie", type: "DZ" },
+        { text: "Musica Elettronica", type: "EM" }
+      ]
+    },
+    {
+      question: "Cosa cerchi dal tuo caffè?",
+      answers: [
+        { text: "Energia immediata", type: "ER" },
+        { text: "Ritualità sociale", type: "CS" },
+        { text: "Gusto deciso e sapori forti", type: "MP" },
+        { text: "Un momento di relax", type: "DZ" },
+        { text: "Un twist che lo renda interessante", type: "EM" }
+      ]
+    },
+    {
+      question: "Il tuo ruolo in un morning club?",
+      answers: [
+        { text: "Sempre in pista, non mi fermo", type: "ER" },
+        { text: "Parlo con tutti, creo networking", type: "CS" },
+        { text: "Ho appuntamento con troppe persone", type: "MP" },
+        { text: "Mi rilasso, prevengo il burnout", type: "DZ" },
+        { text: "Arrivo tardi, ma mi faccio notare", type: "EM" }
+      ]
+    },
+    {
+      question: "Come descriveresti il tuo weekend ideale?",
+      answers: [
+        { text: "Viaggio last minute in una capitale Europea", type: "ER" },
+        { text: "Basta che ci sia almeno un aperitivo organizzato", type: "CS" },
+        { text: "Weekend pianificato tra eventi e orari", type: "MP" },
+        { text: "Relax e detox. Andiamo alle terme?", type: "DZ" },
+        { text: "Niente di organizzato, ci piacciono le serate alternative", type: "EM" }
+      ]
+    }
+  ];
+
+  const resultsMap = {
+    ER: {
+      name: "Espresso Raver",
+      images: [
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/espresso.png",
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Espresso%20Raver.png"
+      ],
+      description: `Il Mood: "Il risveglio è il mio mainstage".
+
+Descrizione: Trasformi le prime ore del giorno in un’esplosione di energia: il mondo si accende, la musica rimbomba nelle cuffie della tua playlist preferita e ogni passo ti carica. Non c’è tempo da perdere, solo ritmo da seguire. Con te non ci si annoia mai, ma meglio non parlarti prima del primo caffè.
+
+Energia: 100% pura & senza compromessi.
+
+Green Flags:
+- Sei l’amico che propone sempre qualcosa di nuovo da fare
+- Sempre dritto al punto senza giri di parole
+- Super produttivo
+
+Red Flags:
+- Impaziente cronico
+- Rispondi “Ok” quando sei arrabbiato
+- Giudichi chi dorme più di 7 ore
+
+La tua combo: Espresso, Succo Ace & Cornetto vuoto`
+    },
+
+    CS: {
+      name: "Cappuccino Socializer",
+      images: [
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/cappuccino.png",
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Cappuccino%20Socializer.png"
+      ],
+      description: `Il Mood: "Il ritmo nasce dalla compagnia".
+
+Descrizione: La tua energia nasce dall’interazione con gli altri: conversazioni, condivisioni di esperienze o il semplice stare in gruppo ti carica. Ogni sorso di caffè è un’occasione per scambiare idee, per te non c’è modo migliore di iniziare una bella giornata con una colazione tra amici. Non hai fretta di tuffarti nel caos quotidiano, preferisci goderti la schiuma della conversazione mentre il beat della giornata sale lentamente.
+
+Energia: Parte al 30% per arrivare al 100% in serata.
+
+Green Flags:
+- Empatico e sensibile
+- Sempre aggiornato sui gossip
+- Senza di te le serate non sono abbastanza spicy da essere raccontate
+
+Red Flags:
+- Logorroico
+- Eterno indeciso
+- Influenzabile dai giudizi degli altri
+
+La tua combo: Cappuccino, Succo Pesca & Cornetto alla crema`
+    },
+
+    MP: {
+      name: "Macchiato Performer",
+      images: [
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/macchiato.png",
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Macchiato%20Performer.png"
+      ],
+      description: `Il Mood: "Sempre il Numero 1".
+
+Descrizione: Ti piace dominare la scena, dirigere il ritmo e non lasciare nulla al caso. Non segui il flusso: lo detti. Quando entri in una stanza, si percepisce grazie alla tua leadership naturale. Sai essere dolce senza perdere la tua intensità, ma attenzione a pensare che siano tutti come te.
+
+Energia: 80%.
+
+Green Flags:
+- Equilibrato ma con carattere
+- Responsabile e autonomo
+- Feedback-friendly
+
+Red Flags:
+- Pretendi troppo
+- Permaloso
+- Tendi ad essere sempre al centro dell’attenzione
+
+La tua combo: Caffè Macchiato, Succo Albicocca & Cornetto al Cioccolato`
+    },
+
+    DZ: {
+      name: "Deca Zen",
+      images: [
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/deca.png",
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Deca%20Zen.png"
+      ],
+      description: `Il Mood: "Equilibrio ad ogni sorso".
+
+Descrizione: Il mondo scorre intorno a lui, ma lui resta centrato. Il Deca Zen non rincorre la giornata, la accompagna. Il caffè è pure piacere, non una carica: equilibrio e armonia definiscono il suo ritmo. Non ci sono problemi che non puoi gestire o situazioni che non puoi controllare, tutto per te è semplice e inizia con un bel caffè Deca.
+
+Energia: 50%.
+
+Green Flags:
+- Non c’è nessuno meno stressato di te
+- Hai una soluzione ad ogni problema, anche perché per te non esistono veri problemi
+- Ottimista
+
+Red Flags:
+- Ritardatario cronico
+- Superficiale
+- Disorganizzato
+
+La tua combo: Caffè Decaffeinato, Succo Mirtillo & Cornetto Cioccolato`
+    },
+
+    EM: {
+      name: "Espresso Martini",
+      images: [
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/martini.png",
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Espresso%20Martini%20Nightrunner.png"
+      ],
+      description: `Il Mood: "La notte non finisce, evolve".
+
+Descrizione: Per chi vive tra la notte e il mattino. L’Espresso Martini è il twist della giornata: non segue il flow, lo trasforma. Entri nel “Morning Club” con l’attitudine di chi ha già vissuto tutto — e ha ancora voglia di un ultimo giro. Niente può essere banale, ti piacciono le cose complesse e sfaccettate altrimenti per te non c’è sfida. Sei eclettico, ma spesso è difficile capirti.
+
+Energia: 70%.
+
+Green Flags:
+- Sognatore
+- Raffinato e sempre all’ultima moda
+- Originale
+
+Red Flags:
+- Ma quanto te la tiri
+- Più complicato di un cubo di Rubik
+- Misterioso fino alla fine
+
+La tua combo: Espresso Martini & Toast`
+    }
+  };
+
   let userEmail = "";
   let currentQuestion = 0;
   let userAnswers = [];
@@ -418,7 +601,8 @@ La tua combo: Espresso Martini & Toast`
 
   function startQuiz() {
     const email = document.getElementById("user-email").value.trim();
-    const privacyChecked = document.getElementById("privacy-check").checked;
+    const marketingChecked = document.getElementById("marketing-check").checked;
+    const profilingChecked = document.getElementById("profiling-check").checked;
     const error = document.getElementById("email-error");
 
     if (!isValidEmail(email)) {
@@ -426,8 +610,8 @@ La tua combo: Espresso Martini & Toast`
       return;
     }
 
-    if (!privacyChecked) {
-      error.textContent = "Devi accettare il trattamento dati per continuare.";
+    if (!marketingChecked || !profilingChecked) {
+      error.textContent = "Devi autorizzare entrambi i consensi per iniziare il quiz.";
       return;
     }
 
@@ -485,7 +669,7 @@ La tua combo: Espresso Martini & Toast`
     }
   }
 
-  function saveLead(finalType, resultTitle) {
+  function saveLead(finalType, resultName) {
     fetch(GOOGLE_ENDPOINT, {
       method: "POST",
       mode: "no-cors",
@@ -494,8 +678,10 @@ La tua combo: Espresso Martini & Toast`
       },
       body: JSON.stringify({
         email: userEmail,
-        result: resultTitle,
+        result: resultName,
         resultCode: finalType,
+        marketingConsent: true,
+        profilingConsent: true,
         answers: userAnswers
       })
     });
@@ -508,7 +694,7 @@ La tua combo: Espresso Martini & Toast`
 
     const result = resultsMap[finalType];
 
-    saveLead(finalType, result.title);
+    saveLead(finalType, result.name);
 
     quizContainer.innerHTML = `
       <div class="progress-wrap">
@@ -520,13 +706,14 @@ La tua combo: Espresso Martini & Toast`
 
       <div class="result">
         <div class="result-badge">Risultato finale</div>
-        <h2 class="result-title">${finalType}</h2>
 
-        <!-- Mostra entrambe le immagini -->
-        <img src="${result.image[0]}" alt="Immagine 1" class="result-image" />
-        <img src="${result.image[1]}" alt="Immagine 2" class="result-image" />
+        <div class="result-images">
+          <img src="${result.images[0]}" alt="${result.name}" class="result-image" />
+          <img src="${result.images[1]}" alt="${result.name}" class="result-image" />
+        </div>
 
         <p class="result-description">${result.description}</p>
+
         <button class="restart-btn" onclick="restartQuiz()">Ricomincia il quiz</button>
         <p class="footer-note">Coffee Personas Quiz</p>
       </div>
