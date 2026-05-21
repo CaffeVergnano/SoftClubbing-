@@ -229,12 +229,32 @@ body {
           placeholder="Inserisci la tua email"
         />
 
-        <label class="privacy-label">
-          <input type="checkbox" id="privacy-check" />
-          <span>
-            Acconsento al trattamento della mia email per partecipare al quiz e ricevere comunicazioni legate all’iniziativa.
-          </span>
-        </label>
+       <div class="privacy-box">
+  <p>Ai sensi degli artt. 6-8 del Reg. (UE) 2016/679</p>
+
+  <label class="privacy-label">
+    <input type="checkbox" id="marketing-check" />
+    <span>
+      Autorizzo il trattamento dei dati personali per promozione e vendita di prodotti e servizi,
+      invio di informazioni commerciali, marketing e rilevazione del grado di soddisfazione.
+    </span>
+  </label>
+
+  <label class="privacy-label">
+    <input type="checkbox" id="profiling-check" />
+    <span>
+      Autorizzo la profilazione delle attività e degli interessi specifici relativi alle comunicazioni inviate
+      al fine di proporre offerte commerciali mirate e report di analisi.
+    </span>
+  </label>
+
+  <p class="privacy-small">
+    Per leggere l’intera informativa sulle attività di marketing
+    <a href="https://vergnano1882.sharepoint.com/:w:/r/Shared%20Documents/informativa%20attivit%C3%A0%20di%20marketing.docx?d=w419fd2e5fd8e4fb292bc37df55b0ca2f&csf=1&web=1&e=aUnSCa" target="_blank">
+      clicca qui
+    </a>.
+  </p>
+</div>
 
         <button class="start-btn" onclick="startQuiz()">Inizia il quiz</button>
         <p id="email-error" class="error-message"></p>
@@ -588,10 +608,17 @@ La tua combo: Espresso Martini & Toast`
     }
   };
 
-  let userEmail = "";
+   let userEmail = "";
   let currentQuestion = 0;
   let userAnswers = [];
-  let scores = { ER: 0, CS: 0, MP: 0, DZ: 0, EM: 0 };
+
+  let scores = {
+    ER: 0,
+    CS: 0,
+    MP: 0,
+    DZ: 0,
+    EM: 0
+  };
 
   const quizContainer = document.getElementById("quiz-container");
 
@@ -600,9 +627,15 @@ La tua combo: Espresso Martini & Toast`
   }
 
   function startQuiz() {
+
     const email = document.getElementById("user-email").value.trim();
-    const marketingChecked = document.getElementById("marketing-check").checked;
-    const profilingChecked = document.getElementById("profiling-check").checked;
+
+    const marketingChecked =
+      document.getElementById("marketing-check").checked;
+
+    const profilingChecked =
+      document.getElementById("profiling-check").checked;
+
     const error = document.getElementById("email-error");
 
     if (!isValidEmail(email)) {
@@ -611,7 +644,8 @@ La tua combo: Espresso Martini & Toast`
     }
 
     if (!marketingChecked || !profilingChecked) {
-      error.textContent = "Devi autorizzare entrambi i consensi per iniziare il quiz.";
+      error.textContent =
+        "Devi accettare entrambi i consensi per continuare.";
       return;
     }
 
@@ -619,39 +653,61 @@ La tua combo: Espresso Martini & Toast`
     error.textContent = "";
 
     document.getElementById("email-step").style.display = "none";
+
     quizContainer.style.display = "block";
 
     renderQuestion();
   }
 
   function renderQuestion() {
+
     const q = questions[currentQuestion];
-    const progressPercent = (currentQuestion / questions.length) * 100;
+
+    const progressPercent =
+      (currentQuestion / questions.length) * 100;
 
     quizContainer.innerHTML = `
       <div class="progress-wrap">
-        <div class="progress-text">Domanda ${currentQuestion + 1} di ${questions.length}</div>
-        <div class="progress-bar">
-          <div class="progress" style="width: ${progressPercent}%;"></div>
+
+        <div class="progress-text">
+          Domanda ${currentQuestion + 1} di ${questions.length}
         </div>
+
+        <div class="progress-bar">
+          <div class="progress"
+            style="width:${progressPercent}%;">
+          </div>
+        </div>
+
       </div>
 
       <h2 class="question">${q.question}</h2>
+
       <div class="answers" id="answers-container"></div>
     `;
 
-    const answersContainer = document.getElementById("answers-container");
+    const answersContainer =
+      document.getElementById("answers-container");
 
     q.answers.forEach(answer => {
+
       const button = document.createElement("button");
+
       button.className = "answer-btn";
+
       button.textContent = answer.text;
-      button.addEventListener("click", () => selectAnswer(answer));
+
+      button.addEventListener("click", () =>
+        selectAnswer(answer)
+      );
+
       answersContainer.appendChild(button);
+
     });
   }
 
   function selectAnswer(answer) {
+
     scores[answer.type]++;
 
     userAnswers.push({
@@ -670,12 +726,14 @@ La tua combo: Espresso Martini & Toast`
   }
 
   function saveLead(finalType, resultName) {
+
     fetch(GOOGLE_ENDPOINT, {
       method: "POST",
       mode: "no-cors",
       headers: {
         "Content-Type": "text/plain;charset=utf-8"
       },
+
       body: JSON.stringify({
         email: userEmail,
         result: resultName,
@@ -688,45 +746,85 @@ La tua combo: Espresso Martini & Toast`
   }
 
   function showResult() {
-    const finalType = Object.keys(scores).reduce((a, b) =>
-      scores[a] >= scores[b] ? a : b
-    );
+
+    const finalType =
+      Object.keys(scores).reduce((a, b) =>
+        scores[a] >= scores[b] ? a : b
+      );
 
     const result = resultsMap[finalType];
 
     saveLead(finalType, result.name);
 
     quizContainer.innerHTML = `
+
       <div class="progress-wrap">
-        <div class="progress-text">Quiz completato</div>
-        <div class="progress-bar">
-          <div class="progress" style="width: 100%;"></div>
+
+        <div class="progress-text">
+          Quiz completato
         </div>
+
+        <div class="progress-bar">
+          <div class="progress" style="width:100%;">
+          </div>
+        </div>
+
       </div>
 
       <div class="result">
-        <div class="result-badge">Risultato finale</div>
 
-        <div class="result-images">
-          <img src="${result.images[0]}" alt="${result.name}" class="result-image" />
-          <img src="${result.images[1]}" alt="${result.name}" class="result-image" />
+        <div class="result-badge">
+          Risultato finale
         </div>
 
-        <p class="result-description">${result.description}</p>
+        <div class="result-images">
 
-        <button class="restart-btn" onclick="restartQuiz()">Ricomincia il quiz</button>
-        <p class="footer-note">Coffee Personas Quiz</p>
+          <img
+            src="${result.images[0]}"
+            class="result-image"
+          />
+
+          <img
+            src="${result.images[1]}"
+            class="result-image"
+          />
+
+        </div>
+
+        <p class="result-description">
+          ${result.description}
+        </p>
+
+        <button
+          class="restart-btn"
+          onclick="restartQuiz()">
+
+          Ricomincia il quiz
+
+        </button>
+
       </div>
     `;
   }
 
   function restartQuiz() {
+
     currentQuestion = 0;
+
     userAnswers = [];
-    scores = { ER: 0, CS: 0, MP: 0, DZ: 0, EM: 0 };
+
+    scores = {
+      ER: 0,
+      CS: 0,
+      MP: 0,
+      DZ: 0,
+      EM: 0
+    };
 
     document.getElementById("email-step").style.display = "block";
+
     quizContainer.style.display = "none";
+
     quizContainer.innerHTML = "";
   }
 </script>
