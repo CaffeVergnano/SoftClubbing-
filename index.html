@@ -563,67 +563,39 @@ La tua combo: Espresso Martini & Toast`
   }
 
   function showResult() {
+  const finalType = Object.keys(scores).reduce((a, b) =>
+    scores[a] >= scores[b] ? a : b
+  );
 
-    const finalType =
-      Object.keys(scores).reduce((a, b) =>
-        scores[a] >= scores[b] ? a : b
-      );
+  const result = resultsMap[finalType];
 
-    const result = resultsMap[finalType];
+  const resultName = result.name || finalType;
+  const resultImages = result.images || result.image;
 
-    saveLead(finalType, result.name);
+  saveLead(finalType, resultName);
 
-    quizContainer.innerHTML = `
+  quizContainer.innerHTML = `
+    <div class="progress-wrap">
+      <div class="progress-text">Quiz completato</div>
+      <div class="progress-bar">
+        <div class="progress" style="width:100%;"></div>
+      </div>
+    </div>
 
-      <div class="progress-wrap">
+    <div class="result">
+      <div class="result-badge">Risultato finale</div>
 
-        <div class="progress-text">
-          Quiz completato
-        </div>
-
-        <div class="progress-bar">
-          <div class="progress" style="width:100%;">
-          </div>
-        </div>
-
+      <div class="result-images">
+        <img src="${resultImages[0]}" class="result-image" alt="${resultName}" />
+        <img src="${resultImages[1]}" class="result-image" alt="${resultName}" />
       </div>
 
-      <div class="result">
+      <p class="result-description">${result.description}</p>
 
-        <div class="result-badge">
-          Risultato finale
-        </div>
-
-        <div class="result-images">
-
-          <img
-            src="${result.images[0]}"
-            class="result-image"
-          />
-
-          <img
-            src="${result.images[1]}"
-            class="result-image"
-          />
-
-        </div>
-
-        <p class="result-description">
-          ${result.description}
-        </p>
-
-        <button
-          class="restart-btn"
-          onclick="restartQuiz()">
-
-          Ricomincia il quiz
-
-        </button>
-
-      </div>
-    `;
-  }
-
+      <button class="restart-btn" onclick="restartQuiz()">Ricomincia il quiz</button>
+    </div>
+  `;
+}
   function restartQuiz() {
 
     currentQuestion = 0;
