@@ -5,245 +5,359 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coffee Personas Quiz</title>
 
-  <style>
-    * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-  background-image: url("https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/refs/heads/main/sfondo.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  color: #6f4e37;
-}
-
-.app {
-  width: 100%;
-  max-width: 820px;
-  background: #ede5da; /* Colore del box con trasparenza */
-  border-radius: 24px;
-  padding: 32px;
-  box-shadow: 0 20px 50px rgba(59, 36, 23, 0.15);
-}
-
-.title {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-}
-
-.subtitle {
-  text-align: center;
-  color: #6f4e37; 
-  margin-bottom: 28px;
-  line-height: 1.5;
-  font-family: 'Poppins', sans-serif;
-}
-
-.email-box {
-  display: grid;
-  gap: 14px;
-}
-
-.email-input {
-  width: 100%;
-  border: 1px solid #e0cbbb;
-  border-radius: 16px;
-  padding: 16px 18px;
-  font-size: 1rem;
-  color: #3b2417;
-  background: #fff;
-}
-
-.privacy-label {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: #6a4a3a;
-}
-
-.start-btn,
-.answer-btn,
-.restart-btn {
-  border: none;
-  border-radius: 16px;
-  padding: 16px 18px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-
-.start-btn,
-.restart-btn {
-  background: #6f4e37;
-  color: white;
-  width: 100%;
-}
-
-.start-btn:hover,
-.restart-btn:hover {
-  background: #5b3f2c;
-  transform: translateY(-2px);
-}
-
-.progress-wrap {
-  margin-bottom: 24px;
-}
-
-.progress-text {
-  font-size: 0.95rem;
-  margin-bottom: 8px;
-  color: #6a4a3a;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  background: #ead9cc;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.progress {
-  height: 100%;
-  background: linear-gradient(90deg, #6f4e37, #b57b55);
-  transition: width 0.3s ease;
-}
-
-.question {
-  font-size: 1.4rem;
-  margin-bottom: 22px;
-  line-height: 1.4;
-}
-
-.answers {
-  display: grid;
-  gap: 14px;
-}
-
-.answer-btn {
-  background: #6f4e37;
-  color: white;
-  text-align: left;
-}
-
-.answer-btn:hover {
-  background: #e8d2c1;
-  transform: translateY(-2px);
-}
-
-.result-badge {
-  display: inline-block;
-  margin-bottom: 16px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: #f0dfd2;
-  color: #6f4e37;
-  font-weight: bold;
-}
-
-.result-title {
-  font-size: 2rem;
-  margin-bottom: 16px;
-}
-
-.result-description {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #5c4033;
-  text-align: left;
-  white-space: normal;
-}
-
-.result-description strong {
-  display: block;
-  margin-top: 16px;
-  margin-bottom: 4px;
-}
-
-.result-description strong:first-child {
-  margin-top: 0;
-}
-
-.result-description ul {
-  margin-top: 4px;
-  margin-bottom: 16px;
-  padding-left: 22px;
-}
-
-.result-description li {
-  margin-bottom: 2px;
-  line-height: 1.4;
-}
-
-.restart-btn {
-  margin-top: 24px;
-}
-
-.result-image {
-  width: 100%;
-  max-width: 200px;
-  margin-bottom: 16px;
-}
-
-.error-message {
-  color: #9b2c2c;
-  font-size: 0.9rem;
-  text-align: center;
-}
-
-.footer-note {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #7b6253;
-}
-
-@media (max-width: 640px) {
-  .app {
-    padding: 24px 18px;
+ <style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
   }
+
+  body {
+    min-height: 100vh;
+    padding: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url("https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/refs/heads/main/sfondo.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: #6f4e37;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 820px;
+    padding: 32px;
+
+    background: #ede5da;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(59, 36, 23, 0.15);
+  }
+
+  /* Titolo iniziale */
 
   .title {
-    font-size: 1.7rem;
+    margin-bottom: 10px;
+
+    font-family: "Poppins", Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
   }
 
+  .subtitle {
+    margin-bottom: 28px;
+
+    font-family: "Poppins", Arial, sans-serif;
+    line-height: 1.5;
+    text-align: center;
+    color: #6f4e37;
+  }
+
+  /* Email e privacy */
+
+  .email-box {
+    display: grid;
+    gap: 14px;
+  }
+
+  .email-input {
+    width: 100%;
+    padding: 16px 18px;
+
+    border: 1px solid #e0cbbb;
+    border-radius: 16px;
+    background: #ffffff;
+
+    font-size: 1rem;
+    color: #3b2417;
+  }
+
+  .email-input:focus {
+    outline: 2px solid #b57b55;
+    outline-offset: 2px;
+  }
+
+  .privacy-box {
+    display: grid;
+    gap: 12px;
+
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #6a4a3a;
+  }
+
+  .privacy-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .privacy-label input {
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .privacy-small {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .privacy-small a {
+    color: #6f4e37;
+    font-weight: 700;
+  }
+
+  /* Pulsanti */
+
+  .start-btn,
+  .answer-btn,
+  .restart-btn {
+    padding: 16px 18px;
+
+    border: none;
+    border-radius: 16px;
+
+    font-size: 1rem;
+    cursor: pointer;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .start-btn,
+  .restart-btn {
+    width: 100%;
+    background: #6f4e37;
+    color: #ffffff;
+  }
+
+  .start-btn:hover,
+  .restart-btn:hover {
+    background: #5b3f2c;
+    transform: translateY(-2px);
+  }
+
+  /* Barra di avanzamento */
+
+  .progress-wrap {
+    margin-bottom: 24px;
+  }
+
+  .progress-text {
+    margin-bottom: 8px;
+
+    font-size: 0.95rem;
+    color: #6a4a3a;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 10px;
+
+    overflow: hidden;
+    background: #ead9cc;
+    border-radius: 999px;
+  }
+
+  .progress {
+    height: 100%;
+
+    background: linear-gradient(90deg, #6f4e37, #b57b55);
+    transition: width 0.3s ease;
+  }
+
+  /* Domande */
+
   .question {
-    font-size: 1.2rem;
+    margin-bottom: 22px;
+
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+
+  .answers {
+    display: grid;
+    gap: 14px;
+  }
+
+  .answer-btn {
+    width: 100%;
+
+    background: #6f4e37;
+    color: #ffffff;
+    text-align: left;
+  }
+
+  .answer-btn:hover {
+    background: #e8d2c1;
+    color: #5c4033;
+    transform: translateY(-2px);
+  }
+
+  /* Risultato */
+
+  .result-badge {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 8px 14px;
+
+    border-radius: 999px;
+    background: #f0dfd2;
+
+    color: #6f4e37;
+    font-weight: 700;
   }
 
   .result-title {
-    font-size: 1.6rem;
+    margin-bottom: 16px;
+    font-size: 2rem;
+  }
+
+  .result-images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    margin-bottom: 24px;
+  }
+
+  .result-image {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
   }
 
   .result-description {
-    font-size: 0.98rem;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: #5c4033;
+    text-align: left;
+    white-space: normal;
   }
-}
-  </style>
+
+  /* Ogni blocco: Mood, Combo, Descrizione, Energia, Flags */
+
+  .result-section {
+    margin-bottom: 24px;
+  }
+
+  .result-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .result-label {
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .result-description p {
+    margin: 0;
+  }
+
+  .result-description ul {
+    margin: 0;
+    padding-left: 24px;
+  }
+
+  .result-description li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+  }
+
+  .result-description li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Spazio tra descrizione e pulsante */
+
+  .restart-btn {
+    margin-top: 32px;
+  }
+
+  /* Messaggi */
+
+  .error-message {
+    font-size: 0.9rem;
+    color: #9b2c2c;
+    text-align: center;
+  }
+
+  .footer-note {
+    margin-top: 20px;
+
+    font-size: 0.9rem;
+    color: #7b6253;
+    text-align: center;
+  }
+
+  /* Mobile */
+
+  @media (max-width: 640px) {
+    body {
+      padding: 14px;
+      align-items: flex-start;
+    }
+
+    .app {
+      padding: 24px 18px;
+      border-radius: 18px;
+    }
+
+    .title {
+      font-size: 1.7rem;
+    }
+
+    .question {
+      font-size: 1.2rem;
+    }
+
+    .result-title {
+      font-size: 1.6rem;
+    }
+
+    .result-description {
+      font-size: 0.98rem;
+    }
+
+    .result-section {
+      margin-bottom: 20px;
+    }
+
+    .result-images {
+      gap: 12px;
+    }
+
+    .result-image {
+      max-width: 160px;
+    }
+
+    .restart-btn {
+      margin-top: 26px;
+    }
+  }
+</style>
 </head>
 
 <body>
   <div class="app">
-    <h1 class="title">Coffee that matches your vibe </h1>
-    <p class="subtitle">
-      Inserisci la tua email, rispondi alle 5 domande e scopri la tua Coffee Persona
+<h1 class="title">Coffee that matches your vibe</h1>
 
-    <div id="email-step">
+<p class="subtitle">
+  Inserisci la tua email, rispondi alle 5 domande e scopri la tua Coffee Persona
+</p>
+
+<div id="email-step">
       <div class="email-box">
         <input
           type="email"
@@ -349,29 +463,44 @@ body {
         "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/espresso.png",
         "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/Espresso%20Raver.png"
       ],
-description: `<strong>Il Mood</strong> 
-"Il risveglio è il mio mainstage".
-<strong>La tua combo</strong> 
-Espresso, Succo Ace & Cornetto vuoto
-<strong>Descrizione:</strong> 
-Trasformi le prime ore del giorno in un’esplosione di energia...
-<strong>Energia:</strong> 
-100% pura & senza compromessi.
+description: `
+  <div class="result-section">
+    <div class="result-label">Il Mood</div>
+    <p>"Il risveglio è il mio mainstage".</p>
+  </div>
 
-Green Flags:
-<ul>
-<li>Sei l’amico che propone sempre qualcosa di nuovo da fare </li>
-<li>Sempre dritto al punto senza giri di parole</li>
-<li>Super produttivo</li>
-</ul>
+  <div class="result-section">
+    <div class="result-label">La tua combo</div>
+    <p>Espresso, Succo Ace & Cornetto vuoto</p>
+  </div>
 
-Red Flags:
-<ul>
-<li>Impaziente cronico</li>
-<li>Rispondi “Ok” quando sei arrabbiato</li>
-<li>Giudichi chi dorme più di 7 ore</li>
-</ul>
+  <div class="result-section">
+    <div class="result-label">Descrizione:</div>
+    <p>Trasformi le prime ore del giorno in un’esplosione di energia...</p>
+  </div>
 
+  <div class="result-section">
+    <div class="result-label">Energia:</div>
+    <p>100% pura & senza compromessi.</p>
+  </div>
+
+  <div class="result-section">
+    <div class="result-label">Green Flags:</div>
+    <ul>
+      <li>Sei l’amico che propone sempre qualcosa di nuovo da fare</li>
+      <li>Sempre dritto al punto senza giri di parole</li>
+      <li>Super produttivo</li>
+    </ul>
+  </div>
+
+  <div class="result-section">
+    <div class="result-label">Red Flags:</div>
+    <ul>
+      <li>Impaziente cronico</li>
+      <li>Rispondi “Ok” quando sei arrabbiato</li>
+      <li>Giudichi chi dorme più di 7 ore</li>
+    </ul>
+  </div>
 `
 
     },
