@@ -140,7 +140,6 @@ body {
   color: white;
   text-align: left;
 }
-}
 
 .answer-btn:hover {
   background: #e8d2c1;
@@ -166,9 +165,33 @@ body {
   font-size: 1.05rem;
   line-height: 1.7;
   color: #5c4033;
-  margin-bottom: 24px;
-  white-space: pre-line;
   text-align: left;
+  white-space: normal;
+}
+
+.result-description strong {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+.result-description strong:first-child {
+  margin-top: 0;
+}
+
+.result-description ul {
+  margin-top: 4px;
+  margin-bottom: 16px;
+  padding-left: 22px;
+}
+
+.result-description li {
+  margin-bottom: 2px;
+  line-height: 1.4;
+}
+
+.restart-btn {
+  margin-top: 24px;
 }
 
 .result-image {
@@ -601,7 +624,7 @@ La tua combo: Espresso Martini & Toast`
         <img src="${resultImages[1]}" class="result-image" alt="${resultName}" />
       </div>
 
-      <p class="result-description">${result.description}</p>
+      <div class="result-description">${result.description}</div>
 
       <button class="restart-btn" onclick="restartQuiz()">Ricomincia il quiz</button>
     </div>
