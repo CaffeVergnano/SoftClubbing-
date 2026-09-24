@@ -459,9 +459,8 @@
 
   const resultsMap = {
     ER: {
-      image: [
-        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/espresso.png"
-      ],
+      image:
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/espresso.png",
 description: `
   <div class="result-section">
     <div class="result-label">Il Mood</div>
@@ -504,9 +503,8 @@ description: `
 
     },
     CS: {
-      image: [
-        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/cappuccino.png"
-      ],
+      image:
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/cappuccino.png",
       description: `  <div class="result-section">
     <div class="result-label">Il Mood</div>
     <p>" Il ritmo nasce dalla compagnia ".</p>
@@ -542,9 +540,8 @@ description: `
 `
     },
     MP: {
-      image: [
-        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/macchiato.png"
-      ],
+      image:
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/macchiato.png",
       description: `  <div class="result-section">
     <div class="result-label">Il Mood</div>
     <p>"Sempre il Numero 1".</p>
@@ -580,9 +577,8 @@ description: `
 `
     },
     DZ: {
-      image: [
-        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/deca.png"
-      ],
+      image: 
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/deca.png",
       description: `  <div class="result-section">
     <div class="result-label">Il Mood</div>
     <p>"Equilibrio ad ogni sorso".</p>
@@ -617,9 +613,8 @@ description: `
   </div>`
     },
     EM: {
-      image: [
-        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/martini.png"
-      ],
+      image: 
+        "https://raw.githubusercontent.com/CaffeVergnano/SoftClubbing-/main/martini.png",
       description: `  <div class="result-section">
     <div class="result-label">Il Mood</div>
     <p>" La notte non finisce, evolve".</p>
@@ -792,42 +787,52 @@ description: `
     });
   }
 
-  function showResult() {
+ function showResult() {
   const finalType = Object.keys(scores).reduce((a, b) =>
     scores[a] >= scores[b] ? a : b
   );
 
   const result = resultsMap[finalType];
 
-  const resultName = result.name || finalType;
-  const resultImages = result.images || result.image;
+  saveLead(finalType, result.name);
 
-  saveLead(finalType, resultName);
+  quizContainer.innerHTML = `
+    <div class="progress-wrap">
+      <div class="progress-text">Quiz completato</div>
 
-quizContainer.innerHTML = `
-  <div class="progress-wrap">
-    <div class="progress-text">Quiz completato</div>
-    <div class="progress-bar">
-      <div class="progress" style="width:100%;"></div>
-    </div>
-  </div>
-
-  <div class="result">
-    <div class="result-badge">Risultato finale</div>
-
-    <div class="result-images">
-      <img src="${resultImages[0]}" class="result-image" alt="" />
+      <div class="progress-bar">
+        <div class="progress" style="width:100%;"></div>
+      </div>
     </div>
 
-    <div class="result-description">
-      ${result.description}
-    </div>
+    <div class="result">
 
-    <button class="restart-btn" onclick="restartQuiz()">
-      Ricomincia il quiz
-    </button>
-  </div>
-`;
+      <div class="result-badge">
+        Risultato finale
+      </div>
+
+      <div class="result-images">
+        <img
+          src="${result.image}"
+          class="result-image"
+          alt=""
+          onerror="this.style.display='none'"
+        />
+      </div>
+
+      <div class="result-description">
+        ${result.description}
+      </div>
+
+      <button
+        class="restart-btn"
+        onclick="restartQuiz()"
+      >
+        Ricomincia il quiz
+      </button>
+
+    </div>
+  `;
 }
   function restartQuiz() {
 
