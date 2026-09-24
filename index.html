@@ -804,26 +804,30 @@ description: `
 
   saveLead(finalType, resultName);
 
-  quizContainer.innerHTML = `
-    <div class="progress-wrap">
-      <div class="progress-text">Quiz completato</div>
-      <div class="progress-bar">
-        <div class="progress" style="width:100%;"></div>
-      </div>
+quizContainer.innerHTML = `
+  <div class="progress-wrap">
+    <div class="progress-text">Quiz completato</div>
+    <div class="progress-bar">
+      <div class="progress" style="width:100%;"></div>
+    </div>
+  </div>
+
+  <div class="result">
+    <div class="result-badge">Risultato finale</div>
+
+    <div class="result-images">
+      <img src="${resultImages[0]}" class="result-image" alt="" />
     </div>
 
-    <div class="result">
-      <div class="result-badge">Risultato finale</div>
-
-      <div class="result-images">
-        <img src="${resultImages[1]}" class="result-image" alt="${resultName}" />
-      </div>
-
-      <div class="result-description">${result.description}</div>
-
-      <button class="restart-btn" onclick="restartQuiz()">Ricomincia il quiz</button>
+    <div class="result-description">
+      ${result.description}
     </div>
-  `;
+
+    <button class="restart-btn" onclick="restartQuiz()">
+      Ricomincia il quiz
+    </button>
+  </div>
+`;
 }
   function restartQuiz() {
 
